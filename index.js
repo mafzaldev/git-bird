@@ -3,14 +3,7 @@ import { select, Separator } from "@inquirer/prompts";
 import { exec } from "child_process";
 import "dotenv/config";
 import ora from "ora";
-
-const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. The diff is as follows:`;
-
-const exitMessages = [
-  "Fine! I didn't want to hang out anyway! *hiss*",
-  "Paws-ing operations… Forever. See ya!",
-  "Ctrl+C? More like Ctrl-See-you-later!",
-];
+import { exitMessages, SYSTEM_PROMPT } from "./constants.js";
 
 function executeGitCommand(args) {
   return new Promise((resolve, reject) => {
@@ -74,12 +67,12 @@ async function main() {
 
     const commitMessage = choice;
     await executeGitCommand(["add", "."]).then((_) => {
-      console.log("➕ Executed add command...");
+      console.log("> Executed add command...");
     });
 
     await executeGitCommand(["commit", "-m", `"${commitMessage}"`]).then(
       (_) => {
-        console.log("🔥 Executed commit command...");
+        console.log("> Executed commit command...");
       }
     );
   } catch (error) {
