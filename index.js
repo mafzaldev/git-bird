@@ -1,5 +1,8 @@
 const { exec } = require("child_process");
 const fs = require("fs");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. The diff is as follows:`;
 
 function executeGitCommand(args) {
   return new Promise((resolve, reject) => {
@@ -17,14 +20,26 @@ function executeGitCommand(args) {
   });
 }
 
-async function maaain() {
+async function getCommitMessages(prompt) {
+  const genAI = new GoogleGenerativeAI("");
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+  const result = await model.generateContent(prompt);
+  console.log(result.response.text());
+}
+
+async function main() {
   try {
     const diffOutput = await executeGitCommand(["diff"]);
-    fs.writeFileSync("git_diff_output.txt", diffOutput);
-    console.log("Git diff has been written to git_diff_output.txt");
+    const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
+    fs.writeFileSync("git_diff_output.txt", prompt);
+    const commitMessages = await getCommitMessages(prompt);
+    // const commitMessage = commitMessages[0].content;
+    // const commitMessageFile = "commit-messages.txt";
+    // fs.writeFileSync(commitMessageFile, commitMessage);
   } catch (error) {
     console.error(error);
   }
 }
 
-maaain();
+main();
