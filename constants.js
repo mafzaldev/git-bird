@@ -1,4 +1,4 @@
-export const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. The diff is as follows:`;
+export const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. Don't hallucinate. Keep it simple. The diff is as follows:`;
 
 export const exitMessages = [
   "Fine! I didn't want to hang out anyway! *hiss*",
