@@ -1,6 +1,7 @@
-const { exec } = require("child_process");
-const fs = require("fs");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { select, Separator } from "@inquirer/prompts";
+import { exec } from "child_process";
+import ora from "ora";
 
 const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. The diff is as follows:`;
 
@@ -21,22 +22,53 @@ function executeGitCommand(args) {
 }
 
 async function getCommitMessages(prompt) {
-  const genAI = new GoogleGenerativeAI("");
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const genAI = new GoogleGenerativeAI(
+    "AIzaSyBN8ivDm7TELlV-3JB3cRDc-gerLrNlhfI"
+  );
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash",
+    systemInstructions: `You don't need to hallucinate the commit messages. Just generate five distinct commit messages for the given diff.`,
+  });
 
   const result = await model.generateContent(prompt);
-  console.log(result.response.text());
+  return result.response
+    .text()
+    .split("\n")
+    .map((msg) => msg.replace(/^\*\s*/, "").trim())
+    .filter((msg) => msg.length > 0)
+    .map((msg) => ({ name: msg, value: msg }));
 }
 
 async function main() {
+  const spinner = ora("Generating commit messages...").start();
+
   try {
     const diffOutput = await executeGitCommand(["diff"]);
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
-    fs.writeFileSync("git_diff_output.txt", prompt);
     const commitMessages = await getCommitMessages(prompt);
-    // const commitMessage = commitMessages[0].content;
-    // const commitMessageFile = "commit-messages.txt";
-    // fs.writeFileSync(commitMessageFile, commitMessage);
+    spinner.stop();
+
+    const choice = await select({
+      message: "Select a commit message:",
+      theme: {
+        helpMode: "never",
+      },
+      choices: [
+        ...commitMessages,
+        new Separator(),
+        { name: "Exit", value: "exit" },
+      ],
+    });
+
+    if (choice === "exit") {
+      console.log("Exiting...");
+      return;
+    }
+
+    const commitMessage = choice;
+
+    await executeGitCommand(["add", "."]);
+    await executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
   } catch (error) {
     console.error(error);
   }

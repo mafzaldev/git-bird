@@ -2,6 +2,7 @@
   "name": "gcm",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "node index.js"
   },
@@ -10,6 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@google/generative-ai": "^0.23.0"
+    "@google/generative-ai": "^0.23.0",
+    "@inquirer/prompts": "^7.3.2",
+    "ora": "^8.2.0"
   }
 }
