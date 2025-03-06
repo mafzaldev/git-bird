@@ -1,9 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { select, Separator } from "@inquirer/prompts";
 import { exec } from "child_process";
+import "dotenv/config";
 import ora from "ora";
 
 const SYSTEM_PROMPT = `Generate a list of five distinct Git commit messages for the given diff. No introduction, no breakdown, just the messages. To the point, and in the imperative mood. The diff is as follows:`;
+
+const exitMessages = [
+  "Fine! I didn't want to hang out anyway! *hiss*",
+  "Paws-ing operations… Forever. See ya!",
+  "Ctrl+C? More like Ctrl-See-you-later!",
+];
 
 function executeGitCommand(args) {
   return new Promise((resolve, reject) => {
@@ -22,9 +29,7 @@ function executeGitCommand(args) {
 }
 
 async function getCommitMessages(prompt) {
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyBN8ivDm7TELlV-3JB3cRDc-gerLrNlhfI"
-  );
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstructions: `You don't need to hallucinate the commit messages. Just generate five distinct commit messages for the given diff.`,
@@ -61,14 +66,22 @@ async function main() {
     });
 
     if (choice === "exit") {
-      console.log("Exiting...");
+      console.log(
+        exitMessages[Math.floor(Math.random() * exitMessages.length)]
+      );
       return;
     }
 
     const commitMessage = choice;
+    await executeGitCommand(["add", "."]).then((_) => {
+      console.log("➕ Executed add command...");
+    });
 
-    await executeGitCommand(["add", "."]);
-    await executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
+    await executeGitCommand(["commit", "-m", `"${commitMessage}"`]).then(
+      (_) => {
+        console.log("🔥 Executed commit command...");
+      }
+    );
   } catch (error) {
     console.error(error);
   }

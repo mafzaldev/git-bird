@@ -13,6 +13,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.23.0",
     "@inquirer/prompts": "^7.3.2",
+    "dotenv": "^16.4.7",
     "ora": "^8.2.0"
   }
 }
