@@ -10,13 +10,10 @@ function executeGitCommand(args) {
   return new Promise((resolve, reject) => {
     exec(`git ${args.join(" ")}`, (error, stdout, stderr) => {
       if (error) {
-        console.error(`Error: ${error.message}`);
-
         reject(`Error: ${error.message}`);
         return;
       }
       if (stderr && !stderr.includes("LF will be replaced by CRLF")) {
-        console.error(`Stderr: ${stderr}`);
         reject(`Stderr: ${stderr}`);
         return;
       }
@@ -24,6 +21,7 @@ function executeGitCommand(args) {
     });
   });
 }
+
 async function main() {
   const spinner = ora("Fetching commit suggestions...").start();
   spinner.clear(); // Temporary fix for spinner showing multiple times
@@ -40,6 +38,7 @@ async function main() {
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
     const commitMessages = await getCommitMessages(prompt);
     spinner.stop();
+
     const choice = await select({
       message: "Select a commit message:",
       choices: [
