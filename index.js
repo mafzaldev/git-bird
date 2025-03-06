@@ -8,7 +8,7 @@ function executeGitCommand(args) {
         reject(`Error: ${error.message}`);
         return;
       }
-      if (stderr) {
+      if (stderr && !stderr.includes("LF will be replaced by CRLF")) {
         reject(`Stderr: ${stderr}`);
         return;
       }
@@ -17,7 +17,7 @@ function executeGitCommand(args) {
   });
 }
 
-async function main() {
+async function maaain() {
   try {
     const diffOutput = await executeGitCommand(["diff"]);
     fs.writeFileSync("git_diff_output.txt", diffOutput);
@@ -27,4 +27,4 @@ async function main() {
   }
 }
 
-main();
+maaain();
