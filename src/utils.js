@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { execSync } from "child_process";
-import { env } from "./constants.js";
+import { env, lockFiles } from "./constants.js";
 
 export function executeGitCommand(args, log = true) {
   if (log) {
@@ -35,4 +35,49 @@ export function color(model) {
   };
 
   return colors[model] ? colors[model](model) : model;
+}
+
+export function detectLockFiles() {
+  const stagedFiles = executeGitCommand(
+    ["diff", "--name-only", "--staged"],
+    false
+  )
+    .trim()
+    .split("\n")
+    .filter(Boolean);
+
+  const hasLockFileChanges = stagedFiles.some((file) =>
+    lockFiles.includes(file)
+  );
+
+  const hasSourceCodeChanges = stagedFiles.some(
+    (file) => !lockFiles.includes(file)
+  );
+
+  if (hasLockFileChanges && !hasSourceCodeChanges) {
+    // Lock file changes only
+    return -1;
+  } else if (hasLockFileChanges && hasSourceCodeChanges) {
+    // Lock file changes along with source code changes
+    return 0;
+  } else {
+    // No lock file changes, only source code changes
+    return 1;
+  }
+}
+
+export function filterLockFiles(diffOutput) {
+  const diffLines = diffOutput.split("\n");
+  const lockFilePattern = new RegExp(`^(${lockFiles.join("|")})$`);
+  let isLockFileChange = false;
+
+  const filteredDiffLines = diffLines.filter((line) => {
+    if (line.startsWith("diff --git")) {
+      const filePath = line.split(" ")[2].substring(2);
+      isLockFileChange = lockFilePattern.test(filePath);
+    }
+    return !isLockFileChange;
+  });
+
+  return filteredDiffLines.join("\n");
 }

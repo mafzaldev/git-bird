@@ -8,8 +8,14 @@ import {
   getCommitMessagesWithChatGPT,
   getCommitMessagesWithGemini,
 } from "./src/ai.js";
-import { exitMessages, lockFiles, SYSTEM_PROMPT } from "./src/constants.js";
-import { color, executeGitCommand, getAvailableModel } from "./src/utils.js";
+import { exitMessages, SYSTEM_PROMPT } from "./src/constants.js";
+import {
+  color,
+  detectLockFiles,
+  executeGitCommand,
+  filterLockFiles,
+  getAvailableModel,
+} from "./src/utils.js";
 
 const cli = meow(
   `
@@ -73,35 +79,20 @@ async function main() {
       return;
     }
 
-    const lockFileChanges = executeGitCommand(
-      ["diff", "--name-only", "--staged", "--", ...lockFiles],
-      false
-    );
-    if (lockFileChanges.trim()) {
-      const otherChanges = executeGitCommand(
-        ["diff", "--name-only", "--staged"],
-        false
-      )
-        .split("\n")
-        .filter((file) => !lockFiles.includes(file));
+    const hasLockFileChanges = detectLockFiles();
 
-      if (otherChanges.length === 0) {
-        console.log(
-          "> Info: Changes detected only in lock files (package-lock.json or yarn.lock)."
-        );
-        spinner.stop();
-        return;
-      }
-    }
-
-    // Remove lock files diff from diffOutput
-    lockFiles.forEach((lockFile) => {
-      const lockFileDiff = executeGitCommand(
-        ["diff", "--staged", "--", lockFile],
-        false
+    if (hasLockFileChanges === -1) {
+      spinner.stop();
+      console.log(
+        "> Info: Lock file changes detected. Please commit lock file changes separately."
       );
-      diffOutput = diffOutput.replace(lockFileDiff, "");
-    });
+      return;
+    } else if (hasLockFileChanges === 0) {
+      console.log(
+        "> Info: Lock file changes detected. Filtering out source code changes..."
+      );
+      diffOutput = filterLockFiles(diffOutput);
+    }
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
     let commitMessages;
