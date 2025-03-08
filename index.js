@@ -8,7 +8,7 @@ import {
   getCommitMessagesWithChatGPT,
   getCommitMessagesWithGemini,
 } from "./src/ai.js";
-import { exitMessages, SYSTEM_PROMPT } from "./src/constants.js";
+import { exitMessages, lockFiles, SYSTEM_PROMPT } from "./src/constants.js";
 import { color, executeGitCommand, getAvailableModel } from "./src/utils.js";
 
 const cli = meow(
@@ -39,7 +39,7 @@ async function main() {
   model = model.toLowerCase();
 
   try {
-    executeGitCommand(["rev-parse", "--is-inside-work-tree"]);
+    executeGitCommand(["rev-parse", "--is-inside-work-tree"], false);
   } catch (error) {
     console.error("> Error: The current directory is not a Git repository.");
     return;
@@ -66,10 +66,22 @@ async function main() {
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
-    const diffOutput = executeGitCommand(["diff", "--staged"]);
+    const diffOutput = executeGitCommand(["diff", "--staged"], false);
     if (!diffOutput.trim()) {
       spinner.stop();
       console.log("> Info: No changes to commit. Please stage some changes.");
+      return;
+    }
+
+    const lockFileChanges = executeGitCommand(
+      ["diff", "--name-only", "--staged", "--", ...lockFiles],
+      false
+    );
+    if (lockFileChanges.trim()) {
+      console.log(
+        "> Info: Changes detected in lock files (package-lock.json or yarn.lock)."
+      );
+      spinner.stop();
       return;
     }
 

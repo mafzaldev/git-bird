@@ -1,6 +1,6 @@
-## GitWhisperer
+## GitBird
 
-The GitWhisperer is a tool designed to help developers generate meaningful and descriptive commit messages using AI models like ChatGPT and Gemini. By analyzing the staged changes in your Git repository, GitWhisperer provides commit message suggestions that can be selected and used directly.
+The GitBird is a tool designed to help developers generate meaningful and descriptive commit messages using AI models like ChatGPT and Gemini. By analyzing the staged changes in your Git repository, GitBird provides commit message suggestions that can be selected and used directly.
 
 ### Features
 
@@ -12,11 +12,11 @@ The GitWhisperer is a tool designed to help developers generate meaningful and d
 
 ### How to use
 
-1. Install GitWhisperer using `npm install -g @mafzaldev/git-whisperer`.
+1. Install GitBird using `npm install -g @mafzaldev/git-bird`.
 2. Set the required environment variables for the AI models.
-3. Move to your Git repository and run `git-whisperer`.
+3. Move to your Git repository and run `git-bird`.
 4. Make your code changes and stage them using `git add`.
-5. Run `git-w -m ${model}` to generate commit messages based on the staged changes.
+5. Run `gitbird -m ${model}` to generate commit messages based on the staged changes.
 
 ### Command-Line Options
 
@@ -25,7 +25,7 @@ The GitWhisperer is a tool designed to help developers generate meaningful and d
 ### Example
 
 ```bash
-git-w -m chatgpt
+gitbird -m chatgpt
 ```
 
 ### Setting Environment Variables

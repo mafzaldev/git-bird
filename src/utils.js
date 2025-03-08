@@ -2,8 +2,10 @@ import chalk from "chalk";
 import { execSync } from "child_process";
 import { env } from "./constants.js";
 
-export function executeGitCommand(args) {
-  console.log(`> Executing git ${args.join(" ")}...`);
+export function executeGitCommand(args, log = true) {
+  if (log) {
+    console.log(`> Executing git ${args.join(" ")} ...`);
+  }
   try {
     const output = execSync(`git ${args.join(" ")}`, { stdio: "pipe" })
       .toString()

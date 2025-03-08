@@ -1,15 +1,15 @@
 {
-  "name": "@mafzaldev/git-whisperer",
+  "name": "@mafzaldev/git-bird",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {},
   "bin": {
-    "git-w": "index.js"
+    "whisper": "index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mafzaldev/git-whisperer.git"
+    "url": "https://github.com/mafzaldev/git-bird.git"
   },
   "keywords": [
     "cli",
