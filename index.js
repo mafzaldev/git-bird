@@ -1,5 +1,4 @@
 import { select, Separator } from "@inquirer/prompts";
-import { execSync } from "child_process";
 import "dotenv/config";
 import meow from "meow";
 import ora from "ora";
@@ -8,7 +7,7 @@ import {
   getCommitMessagesWithGemini,
 } from "./ai.js";
 import { exitMessages, SYSTEM_PROMPT } from "./constants.js";
-import { color, getAvailableModel } from "./utils.js";
+import { color, executeGitCommand, getAvailableModel } from "./utils.js";
 
 const cli = meow(
   `
@@ -32,24 +31,6 @@ const cli = meow(
     },
   }
 );
-
-function executeGitCommand(args) {
-  console.log(`> Executing git ${args.join(" ")}...`);
-  try {
-    const output = execSync(`git ${args.join(" ")}`, { stdio: "pipe" })
-      .toString()
-      .trim();
-    return output;
-  } catch (error) {
-    if (
-      error.stderr &&
-      !error.stderr.toString().includes("LF will be replaced by CRLF")
-    ) {
-      throw new Error(`Error: ${error.stderr.toString().trim()}`);
-    }
-    throw new Error(`Error: ${error.message}`);
-  }
-}
 
 async function main() {
   let { model } = cli.flags;
