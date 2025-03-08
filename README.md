@@ -34,6 +34,7 @@ For Windows (Command Prompt):
 
 ```bash
 setx CHATGPT_API_KEY "your_chatgpt_api_key"
+OR
 setx GEMINI_API_KEY "your_gemini_api_key"
 ```
 
@@ -41,6 +42,7 @@ For Linux/Mac:
 
 ```bash
 export CHATGPT_API_KEY=your_chatgpt_api_key
+OR
 export GEMINI_API_KEY=your_gemini_api_key
 ```
 

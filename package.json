@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {},
   "bin": {
-    "whisper": "index.js"
+    "git-bird": "index.js"
   },
   "repository": {
     "type": "git",

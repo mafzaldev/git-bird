@@ -79,18 +79,15 @@ async function main() {
       return;
     }
 
-    const hasLockFileChanges = detectLockFiles();
+    const hasOnlySourceCode = detectLockFiles();
 
-    if (hasLockFileChanges === -1) {
+    if (hasOnlySourceCode === -1) {
       spinner.stop();
       console.log(
-        "> Info: Lock file changes detected. Please commit lock file changes separately."
+        "> Info: Only Lock file changes detected. No source code changes to commit."
       );
       return;
-    } else if (hasLockFileChanges === 0) {
-      console.log(
-        "> Info: Lock file changes detected. Filtering out source code changes..."
-      );
+    } else if (hasOnlySourceCode === 0) {
       diffOutput = filterLockFiles(diffOutput);
     }
 
