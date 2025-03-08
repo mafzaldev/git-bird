@@ -28,7 +28,7 @@ export const exitMessages = [
 
 export const env = {
   "gemini": "GEMINI_API_KEY",
-  "chatgpt": "OPENAI_API_KEY",
+  "chatgpt": "CHATGPT_API_KEY",
 };
 
 export const lockFiles = [

@@ -14,18 +14,28 @@ The GitBird is a tool designed to help developers generate meaningful and descri
 
 1. Install GitBird using `npm install -g @mafzaldev/git-bird`.
 2. Set the required environment variables for the AI models.
-3. Move to your Git repository and run `git-bird`.
+3. Navigate to your Git repository.
 4. Make your code changes and stage them using `git add`.
-5. Run `gitbird -m ${model}` to generate commit messages based on the staged changes.
+5. Run `git-bird -m ${model}` to generate commit messages based on the staged changes.
 
 ### Command-Line Options
 
-- `-m, --model <model>`: Specify the AI model to use for generating commit messages. Options: `chatgpt` or `gemini`.
+- `-m, --model <model>`: Specify the AI model to use for generating commit messages. Options: `chatgpt` or `gemini`. Default: `chatgpt`.
 
 ### Example
 
+In the below example, it will use the `chatgpt` model by default to generate commit messages based on the staged changes in your repository.
+If you have not set the environment variable for the `chatgpt` model, it will check if any other model's API key is available and use that model instead. If no API keys are available, it will display an error message.
+
 ```bash
-gitbird -m chatgpt
+git-bird
+```
+
+In the below example, if you have not set the environment variable for the `gemini` model, it will automatically fall back to the `chatgpt` model, and vice versa. If you have set the environment variable for both models, it will use the model specified in the command-line options.
+If you have not set the environment variable for either model, it will display an error message.
+
+```bash
+git-bird -m gemini
 ```
 
 ### Setting Environment Variables
