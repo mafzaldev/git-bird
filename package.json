@@ -13,7 +13,10 @@
   "dependencies": {
     "@google/generative-ai": "^0.23.0",
     "@inquirer/prompts": "^7.3.2",
+    "chalk": "^5.4.1",
     "dotenv": "^16.4.7",
+    "meow": "^13.2.0",
+    "openai": "^4.86.2",
     "ora": "^8.2.0"
   }
 }
