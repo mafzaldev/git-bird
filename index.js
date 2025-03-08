@@ -55,15 +55,22 @@ async function main() {
   let { model } = cli.flags;
   model = model.toLowerCase();
 
+  try {
+    executeGitCommand(["rev-parse", "--is-inside-work-tree"]);
+  } catch (error) {
+    console.error("> Error: The current directory is not a Git repository.");
+    return;
+  }
+
   const availableModel = getAvailableModel(model);
   if (!availableModel) {
-    console.error("Error: No available API keys found.");
+    console.error("> Error: No available API keys found.");
     return;
   }
 
   if (availableModel !== model) {
     console.warn(
-      `Warning: ${color(model)} API key is missing. Falling back to ${color(
+      `> Warning: ${color(model)} API key is missing. Falling back to ${color(
         availableModel
       )}.`
     );
@@ -72,7 +79,7 @@ async function main() {
 
   console.log(`> Using ${color(model)} model...`);
 
-  const spinner = ora("Fetching commit suggestions...").start();
+  const spinner = ora("> Fetching commit suggestions...").start();
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
@@ -80,7 +87,7 @@ async function main() {
 
     if (!diffOutput.trim()) {
       spinner.stop();
-      console.log("No changes detected.");
+      console.log("> Info: No changes detected.");
       return;
     }
 
@@ -113,7 +120,7 @@ async function main() {
     executeGitCommand(["add", "."]);
     executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
   } catch (error) {
-    console.error("Something went wrong:", error);
+    console.error("> Error: Something went wrong:", error);
   } finally {
     spinner.stop();
   }
