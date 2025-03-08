@@ -1,10 +1,8 @@
-# GitWhisperer
-
-## Description
+## GitWhisperer
 
 The GitWhisperer is a tool designed to help developers generate meaningful and descriptive commit messages using AI models like ChatGPT and Gemini. By analyzing the staged changes in your Git repository, GitWhisperer provides commit message suggestions that can be selected and used directly.
 
-## Features
+### Features
 
 - **AI-Powered Commit Messages**: Generate commit messages using AI models (ChatGPT or Gemini) based on the staged changes in your repository.
 - **Model Selection**: Specify which AI model to use via command-line options.
@@ -12,26 +10,41 @@ The GitWhisperer is a tool designed to help developers generate meaningful and d
 - **Environment Variable Management**: Automatically checks for required API keys and falls back to available models if the specified model's API key is missing.
 - **Interactive Commit Message Selection**: Choose from a list of suggested commit messages interactively.
 
-## Usage
+### How to use
 
-```sh
-$ gitw [options]
+1. Install GitWhisperer using `npm install -g @mafzaldev/git-whisperer`.
+2. Set the required environment variables for the AI models.
+3. Move to your Git repository and run `git-whisperer`.
+4. Make your code changes and stage them using `git add`.
+5. Run `git-w -m ${model}` to generate commit messages based on the staged changes.
 
-Options:
-  -m, --model  Specify the AI model to use (ChatGPT or Gemini).
+### Command-Line Options
 
-Examples:
-  $ gitw -m chatgpt
+- `-m, --model <model>`: Specify the AI model to use for generating commit messages. Options: `chatgpt` or `gemini`.
+
+### Example
+
+```bash
+git-w -m chatgpt
 ```
 
-## Environment Variables
+### Setting Environment Variables
 
-Ensure you have the necessary API keys set in your environment variables. The required keys are:
+For Windows (Command Prompt):
 
-- `CHATGPT_API_KEY`
-- `GEMINI_API_KEY`
+```bash
+setx CHATGPT_API_KEY "your_chatgpt_api_key"
+setx GEMINI_API_KEY "your_gemini_api_key"
+```
 
-## Future Enhancements
+For Linux/Mac:
+
+```bash
+export CHATGPT_API_KEY=your_chatgpt_api_key
+export GEMINI_API_KEY=your_gemini_api_key
+```
+
+### Future Enhancements
 
 - **Custom Model Support**: Allow users to use their own AI models for generating commit messages.
 - **Custom Commit Message Templates**: Allow users to define custom commit message templates for generating commit messages.

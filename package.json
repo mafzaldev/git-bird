@@ -1,15 +1,26 @@
 {
-  "name": "gcm",
+  "name": "@mafzaldev/git-whisperer",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "dev": "node index.js"
+  "scripts": {},
+  "bin": {
+    "git-w": "index.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafzaldev/git-whisperer.git"
+  },
+  "keywords": [
+    "cli",
+    "git",
+    "openai",
+    "gemini",
+    "ai"
+  ],
+  "author": "Muhammad Afzal",
   "license": "ISC",
-  "description": "",
+  "description": "Generate meaningful commit messages effortlessly with AI.",
   "dependencies": {
     "@google/generative-ai": "^0.23.0",
     "@inquirer/prompts": "^7.3.2",

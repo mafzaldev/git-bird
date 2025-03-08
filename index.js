@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { select, Separator } from "@inquirer/prompts";
 import "dotenv/config";
 import meow from "meow";
