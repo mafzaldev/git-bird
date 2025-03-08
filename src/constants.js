@@ -6,13 +6,14 @@ export const SYSTEM_PROMPT = `
   Message should be self-contained and make sense on its own.
   Messages should be distinct and not too similar.
   Messages should be relevant to the diff.
+  Message length should be around 50-72 characters.
   Messages should include folder and file additions, deletions, and modifications.
   Each message's structure:
   - A message that cover all changes in the diff.
   - A message that covers the main points of the diff.
   - A message that covers the main changes in the diff.
   - A message that covers the main additions in the diff.
-  - A basic message that covers the overval changes in the diff.
+  - A basic small message that covers the overval changes in the diff.
   Use less jargon and more plain language.
   Stick to the diff provided without making assumptions.
   The diff is as follows:

@@ -18,7 +18,7 @@ export async function getCommitMessagesWithChatGPT(prompt) {
   const openai = new OpenAI();
   const completion = await openai.chat.completions.create({
     messages: [{ role: "developer", content: prompt }],
-    model: "gpt-4o",
+    model: "gpt-4o-mini",
   });
   const result = completion.choices[0].message.content;
 

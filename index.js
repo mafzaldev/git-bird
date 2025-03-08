@@ -12,13 +12,13 @@ import { color, executeGitCommand, getAvailableModel } from "./src/utils.js";
 const cli = meow(
   `
     Usage
-      $ gcm [options]
+      $ gitw [options]
 
     Options
       -m, --model  Specify the AI model to use (ChatGPT or Gemini).
 
     Examples
-      $ gcm -m chatgpt
+      $ gitw -m chatgpt
   `,
   {
     importMeta: import.meta,
@@ -60,7 +60,7 @@ async function main() {
 
   console.log(`> Using ${color(model)} model...`);
 
-  const spinner = ora("> Fetching commit suggestions...").start();
+  const spinner = ora("Fetching commit suggestions...").start();
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
