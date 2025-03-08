@@ -66,7 +66,7 @@ async function main() {
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
-    const diffOutput = executeGitCommand(["diff", "--staged"], false);
+    let diffOutput = executeGitCommand(["diff", "--staged"], false);
     if (!diffOutput.trim()) {
       spinner.stop();
       console.log("> Info: No changes to commit. Please stage some changes.");
@@ -78,12 +78,30 @@ async function main() {
       false
     );
     if (lockFileChanges.trim()) {
-      console.log(
-        "> Info: Changes detected in lock files (package-lock.json or yarn.lock)."
-      );
-      spinner.stop();
-      return;
+      const otherChanges = executeGitCommand(
+        ["diff", "--name-only", "--staged"],
+        false
+      )
+        .split("\n")
+        .filter((file) => !lockFiles.includes(file));
+
+      if (otherChanges.length === 0) {
+        console.log(
+          "> Info: Changes detected only in lock files (package-lock.json or yarn.lock)."
+        );
+        spinner.stop();
+        return;
+      }
     }
+
+    // Remove lock files diff from diffOutput
+    lockFiles.forEach((lockFile) => {
+      const lockFileDiff = executeGitCommand(
+        ["diff", "--staged", "--", lockFile],
+        false
+      );
+      diffOutput = diffOutput.replace(lockFileDiff, "");
+    });
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
     let commitMessages;
