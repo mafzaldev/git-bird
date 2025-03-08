@@ -74,9 +74,6 @@ async function main() {
       }
     }
 
-    console.log(diffOutput);
-    return;
-
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
     let commitMessages;
     if (model === "chatgpt") {
