@@ -1,5 +1,5 @@
 import { select, Separator } from "@inquirer/prompts";
-import { exec } from "child_process";
+import { execSync } from "child_process";
 import "dotenv/config";
 import meow from "meow";
 import ora from "ora";
@@ -35,19 +35,20 @@ const cli = meow(
 
 function executeGitCommand(args) {
   console.log(`> Executing git ${args.join(" ")}...`);
-  return new Promise((resolve, reject) => {
-    exec(`git ${args.join(" ")}`, (error, stdout, stderr) => {
-      if (error) {
-        reject(`Error: ${error.message}`);
-        return;
-      }
-      if (stderr && !stderr.includes("LF will be replaced by CRLF")) {
-        reject(`Stderr: ${stderr}`);
-        return;
-      }
-      resolve(stdout);
-    });
-  });
+  try {
+    const output = execSync(`git ${args.join(" ")}`, { stdio: "pipe" })
+      .toString()
+      .trim();
+    return output;
+  } catch (error) {
+    if (
+      error.stderr &&
+      !error.stderr.toString().includes("LF will be replaced by CRLF")
+    ) {
+      throw new Error(`Error: ${error.stderr.toString().trim()}`);
+    }
+    throw new Error(`Error: ${error.message}`);
+  }
 }
 
 async function main() {
@@ -75,7 +76,7 @@ async function main() {
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
-    const diffOutput = await executeGitCommand(["diff"]);
+    const diffOutput = executeGitCommand(["diff"]);
 
     if (!diffOutput.trim()) {
       spinner.stop();
@@ -109,8 +110,8 @@ async function main() {
     }
 
     const commitMessage = choice;
-    await executeGitCommand(["add", "."]);
-    await executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
+    executeGitCommand(["add", "."]);
+    executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
   } catch (error) {
     console.error("Something went wrong:", error);
   } finally {
