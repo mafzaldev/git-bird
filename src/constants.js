@@ -6,6 +6,7 @@ export const SYSTEM_PROMPT = `
   Message should be self-contained and make sense on its own.
   Messages should be distinct and not too similar.
   Messages should be relevant to the diff.
+  Messages should include folder and file additions, deletions, and modifications.
   Each message's structure:
   - A message that cover all changes in the diff.
   - A message that covers the main points of the diff.
