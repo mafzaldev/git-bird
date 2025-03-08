@@ -12,6 +12,7 @@ export const SYSTEM_PROMPT = `
   - A message that covers the main changes in the diff.
   - A message that covers the main additions in the diff.
   - A basic message that covers the overval changes in the diff.
+  Use less jargon and more plain language.
   Stick to the diff provided without making assumptions.
   The diff is as follows:
 `;

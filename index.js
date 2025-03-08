@@ -5,9 +5,9 @@ import ora from "ora";
 import {
   getCommitMessagesWithChatGPT,
   getCommitMessagesWithGemini,
-} from "./ai.js";
-import { exitMessages, SYSTEM_PROMPT } from "./constants.js";
-import { color, executeGitCommand, getAvailableModel } from "./utils.js";
+} from "./src/ai.js";
+import { exitMessages, SYSTEM_PROMPT } from "./src/constants.js";
+import { color, executeGitCommand, getAvailableModel } from "./src/utils.js";
 
 const cli = meow(
   `
@@ -67,9 +67,12 @@ async function main() {
     const diffOutput = executeGitCommand(["diff"]);
 
     if (!diffOutput.trim()) {
-      spinner.stop();
-      console.log("> Info: No changes detected.");
-      return;
+      const diffStagedOutput = executeGitCommand(["diff", "--staged"]);
+      if (!diffStagedOutput.trim()) {
+        spinner.stop();
+        console.log("> Info: No changes to commit.");
+        return;
+      }
     }
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
