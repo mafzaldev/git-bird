@@ -9,7 +9,7 @@ export async function getCommitMessagesWithGemini(prompt) {
   return result.response
     .text()
     .split("\n")
-    .map((msg) => msg.replace(/^[\*\-\•]\s*/, "").trim())
+    .map((msg) => msg.replace(/^[\*\-\•]?\s*(\d+[\.\)]\s*)?/, "").trim())
     .filter((msg) => msg.length > 0)
     .map((msg) => ({ name: msg, value: msg }));
 }
@@ -24,7 +24,7 @@ export async function getCommitMessagesWithChatGPT(prompt) {
 
   return result
     .split("\n")
-    .map((msg) => msg.replace(/^[\*\-\•]\s*/, "").trim())
+    .map((msg) => msg.replace(/^[\*\-\•]?\s*(\d+[\.\)]\s*)?/, "").trim())
     .filter((msg) => msg.length > 0)
     .map((msg) => ({ name: msg, value: msg }));
 }
