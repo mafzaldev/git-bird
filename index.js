@@ -64,14 +64,11 @@ async function main() {
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
-    let diffOutput = executeGitCommand(["diff"]);
+    const diffOutput = executeGitCommand(["diff", "--staged"]);
     if (!diffOutput.trim()) {
-      diffOutput = executeGitCommand(["diff", "--staged"]);
-      if (!diffOutput.trim()) {
-        spinner.stop();
-        console.log("> Info: No changes to commit.");
-        return;
-      }
+      spinner.stop();
+      console.log("> Info: No changes to commit. Please stage some changes.");
+      return;
     }
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
