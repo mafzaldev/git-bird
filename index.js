@@ -64,16 +64,18 @@ async function main() {
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
   try {
-    const diffOutput = executeGitCommand(["diff"]);
-
+    let diffOutput = executeGitCommand(["diff"]);
     if (!diffOutput.trim()) {
-      const diffStagedOutput = executeGitCommand(["diff", "--staged"]);
-      if (!diffStagedOutput.trim()) {
+      diffOutput = executeGitCommand(["diff", "--staged"]);
+      if (!diffOutput.trim()) {
         spinner.stop();
         console.log("> Info: No changes to commit.");
         return;
       }
     }
+
+    console.log(diffOutput);
+    return;
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
     let commitMessages;
@@ -101,7 +103,6 @@ async function main() {
     }
 
     const commitMessage = choice;
-    executeGitCommand(["add", "."]);
     executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
   } catch (error) {
     console.error("> Error: Something went wrong:", error);
