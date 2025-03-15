@@ -20,13 +20,13 @@ import {
 const cli = meow(
   `
     Usage
-      $ gitw [options]
+      $ git-bird [options]
 
     Options
       -m, --model  Specify the AI model to use (ChatGPT or Gemini).
 
     Examples
-      $ gitw -m chatgpt
+      $ git-bird -m chatgpt
   `,
   {
     importMeta: import.meta,
@@ -57,14 +57,7 @@ async function main() {
     return;
   }
 
-  if (availableModel !== model) {
-    console.warn(
-      `> Warning: ${color(model)} API key is missing. Falling back to ${color(
-        availableModel
-      )}.`
-    );
-    model = availableModel;
-  }
+  model = availableModel;
 
   console.log(`> Using ${color(model)} model...`);
 
