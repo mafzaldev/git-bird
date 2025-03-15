@@ -32,10 +32,52 @@ export const env = {
 };
 
 export const lockFiles = [
+  // JavaScript/TypeScript
   "package-lock.json",
   "yarn.lock",
   "pnpm-lock.yaml",
   "bun.lockb",
-  ".pnp.cjs",
-  ".pnp.js",
+
+  // Python
+  "poetry.lock",
+  "Pipfile.lock",
+  "requirements.txt",
+
+  // Ruby
+  "Gemfile.lock",
+
+  // Rust
+  "Cargo.lock",
+
+  // Go
+  "go.sum",
+
+  // Java/Kotlin
+  "gradle.lockfile",
+  "pom.xml",
+
+  // PHP
+  "composer.lock",
+
+  // Dart/Flutter
+  "pubspec.lock",
+
+  // Swift
+  "Package.resolved",
+
+  // C#/.NET
+  "packages.lock.json",
+
+  // Elixir
+  "mix.lock",
+
+  // Haskell
+  "cabal.project.freeze",
+  "stack.yaml.lock",
+
+  // Perl
+  "cpanfile.snapshot",
+
+  // Nix
+  "flake.lock",
 ];
