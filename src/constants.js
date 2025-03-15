@@ -6,11 +6,14 @@ export const SYSTEM_PROMPT = `
   Message should be self-contained and make sense on its own.
   Messages should be distinct and not too similar.
   Messages should be relevant to the diff.
+  Messages should start with small letters and end without a period.
   Message length should be around 40-60 characters.
   Use action verbs at the start of messages, like "Fix" or "Add".
   Use less jargon and more plain language.
+  Avoid exaggerated vocabulary.
   Stick to the diff provided without making assumptions.
   Messages should include folder and file additions, deletions, and modifications.
+  Messages should be in a conventional format. it should not be like: "fix [file] : add [file] : update [file]"
   Each message's structure:
   - A message that cover all changes in the diff.
   - A message that covers the main points of the diff.
