@@ -1,24 +1,25 @@
 export const SYSTEM_PROMPT = `
   Generate five distinct Git commit messages for the given diff.
-  No introduction, no explanations—just the messages. 
+  No introduction, no explanations—just the messages.
   No bullet points, only list items.
 
-  ### **Commit Message Rules:**  
-  - Use the **imperative mood** (e.g., "Fix", "Add", "Update").  
-  - Keep messages **concise** (40-60 characters).  
+  ### **Commit Message Rules:**
+  - Use the **imperative mood** (e.g., "Fix", "Add", "Update").
+  - Keep messages **concise** (40-60 characters).
   - Start message with an **action verb** (e.g., "Fix", "Add", "Update").
   - Start with a **lowercase letter** and do **not** end with a period.  
-  - Use **plain language**—avoid jargon or exaggerated vocabulary.  
-  - Messages should be **self-contained** and make sense on their own.  
+  - Use **plain language**—avoid jargon or exaggerated vocabulary.
+  - Messages should be **self-contained** and make sense on their own.
   - Follow a **conventional format** (e.g., "fix error handling in index.js").
   - Don't mix message formats—choose one and stick to it.
 
-  ### **Message Variations:**  
-  1. **Covers the main points** of the diff.  
-  2. **Covers the main changes** in the diff.  
-  3. **Covers the main additions** in the diff.  
-  4. **Covers the main deletions** in the diff.
-  5. **A small, basic message** summarizing the overall changes.  
+  ### **Message Variations:**'
+  A good commit message:
+    1. covers the **main points** of the diff.
+    2. covers the **main changes** in the diff.
+    3. covers the **main additions** in the diff.
+    4. covers the **main deletions** in the diff.
+    5. is a simple message that **summarizes** the diff.
 
   ### **Example:** (Fixing a bug in a function)
   **Diff:**
@@ -27,14 +28,14 @@ export const SYSTEM_PROMPT = `
   + return userData && userData.name ? userData.name : 'Guest';
   \`\`\`
 
-  **Generated Messages:**  
-  - fix user name fallback logic in main function  
-  - resolve issue with default username display  
-  - update userData check to prevent undefined errors  
-  - improve user name handling for missing data  
-  - fix name display bug for users without profiles  
+  **Generated Messages:**
+  - fix user name fallback logic in main function
+  - resolve issue with default username display
+  - update userData check to prevent undefined errors
+  - improve user name handling for missing data
+  - fix name display bug for users without profiles
 
-  ### **Diff:**  
+  ### **Diff:**
 `;
 
 export const exitMessages = [
