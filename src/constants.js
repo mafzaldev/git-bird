@@ -11,15 +11,18 @@ export const SYSTEM_PROMPT = `
   - Use **plain language**—avoid jargon or exaggerated vocabulary.
   - Messages should be **self-contained** and make sense on their own.
   - Follow a **conventional format** (e.g., "fix error handling in index.js").
-  - Don't mix message formats—choose one and stick to it.
+  - All messages must follow the **same format** within each set.
+  - Do **not** mix formats within the same set of messages.
 
   ### **Message Variations:**'
   A good commit message:
-    1. covers the **main points** of the diff.
-    2. covers the **main changes** in the diff.
+    1. covers the **all changes** in the diff.
+    2. covers the **main points** of the diff.
     3. covers the **main additions** in the diff.
     4. covers the **main deletions** in the diff.
     5. is a simple message that **summarizes** the diff.
+
+  **Ensure all messages in a given response follow the same format.**
 
   ### **Example:** (Fixing a bug in a function)
   **Diff:**
