@@ -1,6 +1,6 @@
 ## GitBird
 
-The GitBird is a tool designed to help developers generate meaningful and descriptive commit messages using AI models like ChatGPT and Gemini. By analyzing the staged changes in your Git repository, GitBird provides commit message suggestions that can be selected and used directly.
+GitBird is a tool designed to help developers generate meaningful and descriptive commit messages using AI models like ChatGPT and Gemini. By analyzing the staged changes in your Git repository, GitBird provides commit message suggestions that can be selected and used directly.
 
 ### Features
 
@@ -9,6 +9,13 @@ The GitBird is a tool designed to help developers generate meaningful and descri
 - **BYOK (Bring Your Own Key)**: Use your own API keys for the AI models.
 - **Environment Variable Management**: Automatically checks for required API keys and falls back to available models if the specified model's API key is missing.
 - **Interactive Commit Message Selection**: Choose from a list of suggested commit messages interactively.
+
+### Video Demo
+
+<video controls>
+  <source src="git-bird-demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### How to use
 
@@ -55,9 +62,3 @@ export CHATGPT_API_KEY=your_chatgpt_api_key
 OR
 export GEMINI_API_KEY=your_gemini_api_key
 ```
-
-### Future Enhancements
-
-- **Custom Model Support**: Allow users to use their own AI models for generating commit messages.
-- **Custom Commit Message Templates**: Allow users to define custom commit message templates for generating commit messages.
-- **Support for Multiple Languages**: Enable support for generating commit messages in multiple languages.
