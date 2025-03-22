@@ -53,7 +53,7 @@ async function main() {
 
   const availableModel = getAvailableModel(model);
   if (!availableModel) {
-    console.error("> Error: No available API keys found.");
+    console.error("> Info: No API key found. Please set the API keys.");
     return;
   }
 

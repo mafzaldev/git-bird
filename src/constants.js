@@ -1,26 +1,40 @@
 export const SYSTEM_PROMPT = `
-  Generate five distinct Git commit messages for the given diff. 
+  Generate five distinct Git commit messages for the given diff.
   No introduction, no explanations—just the messages. 
   No bullet points, only list items.
-  Use the imperative mood and keep them concise.
-  Message should be self-contained and make sense on its own.
-  Messages should be distinct and not too similar.
-  Messages should be relevant to the diff.
-  Messages should start with small letters and end without a period.
-  Message length should be around 40-60 characters.
-  Use action verbs at the start of messages, like "Fix" or "Add".
-  Use less jargon and more plain language.
-  Avoid exaggerated vocabulary.
-  Stick to the diff provided without making assumptions.
-  Messages should include folder and file additions, deletions, and modifications.
-  Messages should be in a conventional format. it should not be like: "fix [file] : add [file] : update [file]"
-  Each message's structure:
-  - A message that cover all changes in the diff.
-  - A message that covers the main points of the diff.
-  - A message that covers the main changes in the diff.
-  - A message that covers the main additions in the diff.
-  - A basic small message that covers the overval changes in the diff.
-  The diff is as follows:
+
+  ### **Commit Message Rules:**  
+  - Use the **imperative mood** (e.g., "Fix", "Add", "Update").  
+  - Keep messages **concise** (40-60 characters).  
+  - Start message with an **action verb** (e.g., "Fix", "Add", "Update").
+  - Start with a **lowercase letter** and do **not** end with a period.  
+  - Use **plain language**—avoid jargon or exaggerated vocabulary.  
+  - Messages should be **self-contained** and make sense on their own.  
+  - Follow a **conventional format** (e.g., "fix error handling in index.js").
+  - Don't mix message formats—choose one and stick to it.
+
+  ### **Message Variations:**  
+  1. **Covers the main points** of the diff.  
+  2. **Covers the main changes** in the diff.  
+  3. **Covers the main additions** in the diff.  
+  4. **Covers the main deletions** in the diff.
+  5. **A small, basic message** summarizing the overall changes.  
+
+  ### **Example:** (Fixing a bug in a function)
+  **Diff:**
+  \`\`\`diff
+  - return userData?.name || 'Guest';
+  + return userData && userData.name ? userData.name : 'Guest';
+  \`\`\`
+
+  **Generated Messages:**  
+  - fix user name fallback logic in main function  
+  - resolve issue with default username display  
+  - update userData check to prevent undefined errors  
+  - improve user name handling for missing data  
+  - fix name display bug for users without profiles  
+
+  ### **Diff:**  
 `;
 
 export const exitMessages = [
