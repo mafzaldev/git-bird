@@ -12,10 +12,7 @@ GitBird is a tool designed to help developers generate meaningful and descriptiv
 
 ### Video Demo
 
-<video controls>
-  <source src="git-bird-demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Watch on YouTube](https://youtu.be/GDzxq9sa4vQ)
 
 ### How to use
 
