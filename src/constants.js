@@ -14,10 +14,8 @@ export const SYSTEM_PROMPT = `
   - Each commit message must be a single line of text.
   - Do not include any text other than the commit message itself.
   - All messages must follow the **same format** within each set.
-  - **Choose ONE of the following formats and strictly use it for ALL messages:**
-      * **Format 1:** action: brief description
-      * **Format 2:** action description in index.js
-  - Give only one set of messages at a time.
+  - Strictly follow this format:
+    \`<action verb> <comma separated description if applicable>\`.
 
   ### **Message Variations:**  
   A good commit message should:  
@@ -27,7 +25,7 @@ export const SYSTEM_PROMPT = `
   4. Clearly state the **most impactful deletions or removals** in the diff.  
   5. Provide a **brief but complete overview** of the diff in plain language.  
 
-  ### **Example 1:**
+  ### **Example:**
   **Diff:**
   \`\`\`diff
   - function fetchData(url) {
@@ -46,25 +44,6 @@ export const SYSTEM_PROMPT = `
   - improve fetchData by adding async support, options, error check
   - enhance fetchData with async handling, status validation, options
   - fix fetchData by refactoring to async, adding options, handling errors
-
-  ### **Example 2:**
-  **Diff:**
-  \`\`\`diff
-  - const message = "Hello World";
-  + const message = "Hello, Universe!";
-  \`\`\`
-
-  **Incorrect Commit Messages (DO NOT COMBINE):**
-  - refactor: fix typo in message, update greeting string
-  - update index.js, fix typo in greeting string
-
-  **Correct Commit Messages (FOLLOW ONE FORMAT):**
-  - refactor: fix typo in message greeting
-  - fix: update greeting message to "Hello, Universe!"
-
-  **Correct Commit Messages (FOLLOW ONE FORMAT):**
-  - update greeting message in index.js
-  - fix typo in message string in index.js.
 
   Here's the diff:
 `;
