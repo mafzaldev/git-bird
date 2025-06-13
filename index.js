@@ -4,6 +4,7 @@ import { select, Separator } from "@inquirer/prompts";
 import "dotenv/config";
 import meow from "meow";
 import ora from "ora";
+import { fetch, Headers, Request, Response } from "undici";
 import {
   getCommitMessagesWithChatGPT,
   getCommitMessagesWithGemini,
@@ -16,6 +17,35 @@ import {
   filterLockFiles,
   getAvailableModel,
 } from "./src/utils.js";
+
+// Polyfill for fetch, Headers, Request, and Response if not available
+if (typeof global.fetch === 'undefined') {
+  global.fetch = fetch;
+}
+
+if (typeof global.Headers === 'undefined') {
+  global.Headers = Headers;
+}
+
+if (typeof global.Request === 'undefined') {
+  global.Request = Request;
+}
+
+if (typeof global.Response === 'undefined') {
+  global.Response = Response;
+}
+
+// Polyfill for Array.prototype.findLastIndex if not available
+if (!Array.prototype.findLastIndex) {
+  Array.prototype.findLastIndex = function (predicate, thisArg) {
+    for (let i = this.length - 1; i >= 0; i--) {
+      if (predicate.call(thisArg, this[i], i, this)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
 
 const cli = meow(
   `
@@ -40,7 +70,7 @@ const cli = meow(
   }
 );
 
-async function main() {
+(async () => {
   let { model } = cli.flags;
   model = model.toLowerCase();
 
@@ -110,12 +140,10 @@ async function main() {
     }
 
     const commitMessage = choice;
-    executeGitCommand(["commit", "-m", `"${commitMessage}"`]);
+    executeGitCommand(["commit", "-m", commitMessage]);
   } catch (error) {
     console.error("> Error: Something went wrong:", error);
   } finally {
     spinner.stop();
   }
-}
-
-main();
+})();

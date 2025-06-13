@@ -14,6 +14,7 @@ export const SYSTEM_PROMPT = `
   - Each commit message must be a single line of text.
   - Do not include any text other than the commit message itself.
   - All messages must follow the **same format** within each set.
+  - Do not use : in the commit message.
   - Strictly follow this format:
     \`<action verb> <comma separated description if applicable>\`.
 

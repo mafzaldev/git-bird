@@ -28,7 +28,8 @@
     "dotenv": "^16.4.7",
     "meow": "^13.2.0",
     "openai": "^4.86.2",
-    "ora": "^8.2.0"
+    "ora": "^8.2.0",
+    "undici": "^5.29.0"
   },
   "publishConfig": {
     "access": "public"
