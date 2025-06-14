@@ -15,6 +15,11 @@ export const SYSTEM_PROMPT = `
   - Do not include any text other than the commit message itself.
   - All messages must follow the **same format** within each set.
   - Do not use : in the commit message.
+  - Maximum update items should be **three**.
+  - Minimum update items should be **one**.
+  - Be **concise** and **to the point**.
+  - Avoid using **unnecessary words** or **fluff**.
+  - Don't address an update twice in the same message.
   - Strictly follow this format:
     \`<action verb> <comma separated description if applicable>\`.
 
