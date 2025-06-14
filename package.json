@@ -3,7 +3,9 @@
   "version": "1.0.4",
   "main": "index.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "push": "./push_script.sh"
+  },
   "bin": {
     "git-bird": "index.js"
   },
