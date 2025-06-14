@@ -1,25 +1,29 @@
 import chalk from "chalk";
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 import { env, lockFiles } from "./constants.js";
 
 export function executeGitCommand(args, log = true) {
   if (log) {
-    console.log(`> Executing git ${args.join(" ")} ...`);
+    console.log(`> Executing git ${args.join(" ")}`);
   }
-  try {
-    const output = execSync(`git ${args.join(" ")}`, { stdio: "pipe" })
-      .toString()
-      .trim();
-    return output;
-  } catch (error) {
-    if (
-      error.stderr &&
-      !error.stderr.toString().includes("LF will be replaced by CRLF")
-    ) {
-      throw new Error(`Error: ${error.stderr.toString().trim()}`);
+
+  const result = spawnSync("git", args, {
+    encoding: "utf-8",
+    stdio: ["inherit", "pipe", "pipe"],
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  if (result.status !== 0) {
+    const stderr = result.stderr || "";
+    if (!stderr.includes("LF will be replaced by CRLF")) {
+      throw new Error(`Error: ${stderr.trim()}`);
     }
-    throw new Error(`Error: ${error.message}`);
   }
+
+  return result.stdout.trim();
 }
 
 export function getAvailableModel(preferredModel) {

@@ -6,7 +6,7 @@ export const SYSTEM_PROMPT = `
   ### **Commit Message Rules:**
   - Use the **imperative mood** (e.g., "Fix", "Add", "Update").
   - Keep messages strictly within 30 to 50 characters.
-  - Start message with an **action verb** (e.g., "Fix", "Add", "Update").
+  - Start message with only **one** **action verb** (e.g., "Fix", "Add", "Update").
   - Start with a **lowercase letter** and do **not** end with a period.  
   - Use **plain language**—avoid jargon or exaggerated vocabulary.
   - Messages should be **self-contained** and make sense on their own.
@@ -41,10 +41,10 @@ export const SYSTEM_PROMPT = `
 
   **Generated Messages:**
   - refactor fetchData to async, add options, improve error handling
-  - update fetchData with async/await, request validation, options
-  - improve fetchData by adding async support, options, error check
-  - enhance fetchData with async handling, status validation, options
-  - fix fetchData by refactoring to async, adding options, handling errors
+  - update fetchData with async/await
+  - improve fetchData by adding async support
+  - enhance fetchData with async handling
+  - fix fetchData by refactoring to async
 
   Here's the diff:
 `;
