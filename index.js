@@ -131,6 +131,8 @@ async function suggestCommitMessage(model) {
     executeGitCommand(["commit", "-m", commitMessage]);
   } catch (error) {
     console.error("> Error: Something went wrong:", error);
+  } finally {
+    spinner.stop();
   }
 }
 
