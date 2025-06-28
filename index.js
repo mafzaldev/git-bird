@@ -72,29 +72,7 @@ const cli = meow(
   }
 );
 
-(async () => {
-  setupPolyfills();
-
-  let { model } = cli.flags;
-  model = model.toLowerCase();
-
-  try {
-    executeGitCommand(["rev-parse", "--is-inside-work-tree"], false);
-  } catch (error) {
-    console.error("> Error: The current directory is not a Git repository.");
-    return;
-  }
-
-  const availableModel = getAvailableModel(model);
-  if (!availableModel) {
-    console.error("> Info: No API key found. Please set the API keys.");
-    return;
-  }
-
-  model = availableModel;
-
-  console.log(`> Using ${color(model)} model...`);
-
+async function suggestCommitMessage(model) {
   const spinner = ora("Fetching commit suggestions...").start();
   spinner.clear(); // Temporary fix for spinner showing multiple times
 
@@ -119,7 +97,7 @@ const cli = meow(
     }
 
     const prompt = SYSTEM_PROMPT + "\n" + diffOutput;
-    let commitMessages;
+    let commitMessages = [];
     if (model === "chatgpt") {
       commitMessages = await getCommitMessagesWithChatGPT(prompt);
     } else {
@@ -132,7 +110,9 @@ const cli = meow(
       choices: [
         ...commitMessages,
         new Separator(),
+        { name: "Generate Again", value: "again" },
         { name: "Exit", value: "exit" },
+        new Separator(),
       ],
     });
 
@@ -143,6 +123,10 @@ const cli = meow(
       return;
     }
 
+    if (choice === "again") {
+      return await suggestCommitMessage(model);
+    }
+
     const commitMessage = choice;
     executeGitCommand(["commit", "-m", commitMessage]);
   } catch (error) {
@@ -150,4 +134,30 @@ const cli = meow(
   } finally {
     spinner.stop();
   }
+}
+
+(async () => {
+  setupPolyfills();
+
+  let { model } = cli.flags;
+  model = model.toLowerCase();
+
+  try {
+    executeGitCommand(["rev-parse", "--is-inside-work-tree"], false);
+  } catch (error) {
+    console.error("> Error: The current directory is not a Git repository.");
+    return;
+  }
+
+  const availableModel = getAvailableModel(model);
+  if (!availableModel) {
+    console.error("> Info: No API key found. Please set the API keys.");
+    return;
+  }
+
+  model = availableModel;
+
+  console.log(`> Using ${color(model)} model...`);
+
+  await suggestCommitMessage(model);
 })();
