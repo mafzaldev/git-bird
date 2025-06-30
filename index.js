@@ -18,35 +18,33 @@ import {
   getAvailableModel,
 } from "./src/utils.js";
 
-function setupPolyfills() {
-  // Polyfill for fetch, Headers, Request, and Response if not available
-  if (typeof global.fetch === "undefined") {
-    global.fetch = fetch;
-  }
+// Polyfill for fetch, Headers, Request, and Response if not available
+if (typeof global.fetch === "undefined") {
+  global.fetch = fetch;
+}
 
-  if (typeof global.Headers === "undefined") {
-    global.Headers = Headers;
-  }
+if (typeof global.Headers === "undefined") {
+  global.Headers = Headers;
+}
 
-  if (typeof global.Request === "undefined") {
-    global.Request = Request;
-  }
+if (typeof global.Request === "undefined") {
+  global.Request = Request;
+}
 
-  if (typeof global.Response === "undefined") {
-    global.Response = Response;
-  }
+if (typeof global.Response === "undefined") {
+  global.Response = Response;
+}
 
-  // Polyfill for Array.prototype.findLastIndex if not available
-  if (!Array.prototype.findLastIndex) {
-    Array.prototype.findLastIndex = function (predicate, thisArg) {
-      for (let i = this.length - 1; i >= 0; i--) {
-        if (predicate.call(thisArg, this[i], i, this)) {
-          return i;
-        }
+// Polyfill for Array.prototype.findLastIndex if not available
+if (!Array.prototype.findLastIndex) {
+  Array.prototype.findLastIndex = function (predicate, thisArg) {
+    for (let i = this.length - 1; i >= 0; i--) {
+      if (predicate.call(thisArg, this[i], i, this)) {
+        return i;
       }
-      return -1;
-    };
-  }
+    }
+    return -1;
+  };
 }
 
 const cli = meow(
@@ -137,8 +135,6 @@ async function suggestCommitMessage(model) {
 }
 
 (async () => {
-  setupPolyfills();
-
   let { model } = cli.flags;
   model = model.toLowerCase();
 
